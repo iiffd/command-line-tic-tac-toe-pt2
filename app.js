@@ -30,7 +30,11 @@ class TicTacToe {
       this.chooseSpot();
       return;
     }
-    console.log(num);
+    if (!Number.isInteger(this.board[Math.floor(Number(num) / 3)][Number(num) % 3])) {
+      console.log('That spot is already chosen');
+      this.chooseSpot();
+      return;
+    }
     this.board[Math.floor(Number(num) / 3)][Number(num) % 3] = this.turn;
     this.moves += 1;
   }
@@ -76,14 +80,35 @@ class TicTacToe {
     // check winner or tie
     if (this.checkWinner()) {
       console.log(`${this.turn} wins!`);
+      this.reset();
       return;
     }
     if (this.checkTie()) {
       console.log("It's a tie!");
+      this.reset();
       return;
     }
     this.switchTurn();
     this.play();
+  }
+  reset() {
+    const option = prompt.question('Play again?\n');
+    if (option === 'yes' || option === 'no') {
+      if (option === 'yes') {
+        this.board = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8]
+        ];
+        this.moves = 0;
+        this.turn = 'X';
+        this.printBoard();
+        this.play();
+      }
+      return
+    }
+    console.log('Type yes or no');
+    this.reset();
   }
 }
 
