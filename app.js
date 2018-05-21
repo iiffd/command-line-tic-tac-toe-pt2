@@ -19,6 +19,18 @@ class TicTacToe {
   }
   chooseSpot() {
     const num = prompt.question(`${this.turn} choose a spot\n`);
+    // Input validation
+    if (!Number.isInteger(Number(num))) {
+      console.log('That is not a number. Choose a number');
+      this.chooseSpot();
+      return;
+    }
+    if (Number(num) > 8 || Number(num) < 0) {
+      console.log('Choose a number in the range specified');
+      this.chooseSpot();
+      return;
+    }
+    console.log(num);
     this.board[Math.floor(Number(num) / 3)][Number(num) % 3] = this.turn;
     this.moves += 1;
   }
@@ -57,7 +69,7 @@ class TicTacToe {
   }
 
 
-  
+
   play() {
     this.chooseSpot();
     this.printBoard();
